@@ -4,9 +4,10 @@ const Bread = require("../models/bread.js");
 
 // Index
 breads.get("/", (req, res) => {
-  Bread.find().then((foundBreads) => {
+  Bread.find()
+  .then((foundBread) => {
     res.render("index", {
-      breads: foundBreads,
+      breads: foundBread,
       title: "Index Page",
     });
   });
@@ -37,8 +38,8 @@ breads.get("/new", (req, res) => {
 breads.get("/:id", (req, res) => {
   Bread.findById(req.params.id)
     .then((foundBread) => {
-      const bakedBy = foundBread.getBakedBy()
-      console.log(bakedBy)
+      const bakedBy = foundBread.getBakedBy();
+      console.log(bakedBy);
       res.render("show", {
         bread: foundBread,
       });
@@ -63,7 +64,7 @@ breads.put("/:id", (req, res) => {
     req.body.hasGluten = false;
   }
   Bread.findByIdAndUpdate(req.params.id, req.body, { new: true }).then(
-    updatedBread => {
+    (updatedBread) => {
       console.log(updatedBread);
       res.redirect(`/breads/${req.params.id}`);
     }
@@ -72,9 +73,9 @@ breads.put("/:id", (req, res) => {
 
 // EDIT
 breads.get("/:id/edit", (req, res) => {
-  Bread.findById(req.params.id).then(foundBread => {
+  Bread.findById(req.params.id).then((foundBread) => {
     res.render("edit", {
-      bread: foundBread
+      bread: foundBread,
     });
   });
 });
