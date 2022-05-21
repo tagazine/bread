@@ -12,6 +12,8 @@ function Show({ bread }) {
       </p>
       <img src={bread.image} alt={bread.name} />
       <p>{bread.getBakedBy()}</p>
+
+      {/* <p>{bread.allBaked()}</p>  */}
       
       <li>
         <a href="/breads">Go home</a>
