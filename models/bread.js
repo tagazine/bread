@@ -9,7 +9,7 @@ const breadSchema = new Schema({
   hasGluten: Boolean,
   image: { type: String, default: "http://placehold.it/500x500.png" },
   baker: {
-    type: Schema.Types.ObjectId,
+    type: Schema.Types.ObjectID,
     ref: "Baker",
   }
 });
@@ -22,9 +22,11 @@ const breadSchema = new Schema({
 // };
 
 // Instance
-breadSchema.methods.getBakedBy = function () {
-  return `${this.name} was baked with love by ${this.baker}.`;
-};
+// helper methods 
+breadSchema.methods.getBakedBy = function(){
+  return `${this.name} was baked with love by ${this.baker.name}, who has been with us since ${this.baker.startDate.getFullYear()}.`
+}
+
 
 // Model and Export
 const Bread = mongoose.model("Bread", breadSchema);

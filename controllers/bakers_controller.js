@@ -2,13 +2,32 @@
 const express = require("express");
 const baker = express.Router();
 const Baker = require("../models/baker.js");
-const bakerSeedDate = require("../models/baker_seed.js");
+const bakerSeedData = require("../models/baker_seed.js");
 
-// export
-module.exports = baker;
+// index
+baker.get("/", (req, res) => {
+  Baker.find()
+    .populate("breads")
+    .then((foundBakers) => {
+      res.send(foundBakers);
+    });
+});
+
+// show
+baker.get("/:id", (req, res) => {
+  Baker.findById(req.params.id)
+    .populate("breads")
+    .then((foundBaker) => {
+      res.render("bakerShow", {
+        baker: foundBaker,
+      });
+    });
+});
 
 // route
 baker.get("/data/seed", (req, res) => {
-  Baker.insertMany(bakerSeedDate)
-    .then(res.redirect("/breads"));
+  Baker.insertMany(bakerSeedData).then(res.redirect("/breads"));
 });
+
+// export
+module.exports = baker;
